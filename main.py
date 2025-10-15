@@ -8,7 +8,11 @@ EMAIL_PASSWORD = os.environ.get("GMAIL_PASSWORD")
 
 # gets the current price for the product at the specified URL
 def get_price_for_product(url):
-    response = requests.get(url)
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0",
+        "Accept-Language": "en-US,en;q=0.5"
+    }
+    response = requests.get(url=url, headers=headers)
     #print(response.text)
 
     soup = BeautifulSoup(response.text, 'html.parser')
@@ -28,8 +32,8 @@ def get_price_for_product(url):
 products_to_monitor = [
     {
         "product_name": "Instant Pot",
-        "product_url": "https://appbrewery.github.io/instant_pot/",
-        "target_price": 100.00
+        "product_url": "https://www.amazon.com/dp/B075CYMYK6?ref_=cm_sw_r_cp_ud_ct_FM9M699VKHTT47YD50Q6&th=1",
+        "target_price": 120.00
     }
 ]
 
@@ -63,4 +67,8 @@ if len(matching_products) > 0:
 
     # send an email to the user
     email.send_email(to, subject, message)
+    print()
+    print(to)
+    print(subject)
+    print(message)
 
